@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Voting System (Articles and Images)</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Font Awesome CDN for thumbs up/down icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('./images/Articles_bg.webp');
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        /* Navigation Bar Styling */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px 0;
+        }
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+            color: white;
+        }
+
+        .heading{
+            color: green;
+        }
+        
+        /* Content Item Styling */
+        .item {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+        .vote-buttons {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .vote-btn {
+            background-color: #f1f1f1;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .vote-btn:hover {
+            background-color: #ddd;
+        }
+        .vote-count {
+            display: flex;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .upvotes, .downvotes {
+            margin: 0 25px;
+        }
+        .fa-thumbs-up, .fa-thumbs-down {
+            font-size: 20px;
+        }
+        .image-content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Initially hide both sections */
+        #articles-section, #images-section {
+            display: none;
+        }
+
+        .footer{
+           display: flex;
+           justify-content: center;
+           background-color: #333;
+           color: white; 
+           padding-top: 30px;
+           padding-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="#" id="show-articles">Articles</a>
+    <a href="#" id="show-images">Posts</a>
+</div>
+
+<div class="container">
+
+    <!-- Articles Section -->
+    <div id="articles-section">
+
+        <!-- Example 1: Article -->
+        <div class="item" id="article_1">
+            <h2 class="heading">Unleashing excellence - a competency-based approach to learning</h2>
+            <p>Sept 26,2024</p>
+            <p>The National Education Policy (NEP) spotlights competency-based learning and assessment as central to transforming education. In today’s reader submission, maths educator Richa Thakur shares how this approach is being integrated into the 
+                curriculum at Khaitan Public School in Ghaziabad and discusses some of the challenges and solutions of implementation.</p>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="1" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="1" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-1">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-1">0</span></div>
+            </div>
+        </div>
+
+        <!-- Add more articles as needed... -->
+        <div class="item" id="article_2">
+            <h2 class="heading">Strategies to nurture students' social and emotional wellbeing</h2>
+            <p>May 30,2024</p>
+            <p>In our latest reader contribution, Anuradha Chaudhary – a grade 8 teacher at DLF Public School in 
+                Ghaziabad City, India – shares examples of strategies to create a nurturing, inclusive and supportive
+                learning environment for students.</p>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="2" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="2" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-2">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-2">0</span></div>
+            </div>
+        </div>
+
+        <div class="item" id="article_3">
+            <h2 class="heading">'Teacher of the street' breaking the cycle of illiteracy in rural India</h2>
+            <p>Apr 04,2024</p>
+            <p>Deep Narayan Nayak from Asansol, West Bengal, popularly known as Raster Master (Teacher of the street), 
+                is working towards the educational upliftment of learners across generations 
+                of socially and economically marginalised communities. He was one of the Top 
+                10 finalists of the prestigious Global Teacher Prize 2023.</p>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="3" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="3" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-3">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-3">0</span></div>
+            </div>
+        </div>
+
+        <div class="item" id="article_4">
+            <h2 class="heading">Teaching about climate change: A transformative pedagogy for actionable impact</h2>
+            <p>Feb 22,2024</p>
+            <p>‘Teaching climate change through an alternate pedagogy not only equips students with scientific 
+                knowledge but empowers them to become agents of change.’ In his latest article for Teacher,
+                 Ashok Pandey describes his innovative approach to teaching climate change that involves immersing 
+                 students into real-world scenarios..</p>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="4" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="4" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-4">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-4">0</span></div>
+            </div>
+        </div>
+
+        <div class="item" id="article_5">
+            <h2 class="heading">A year 12 AI lesson activity in Economics</h2>
+            <p>Mar 28,2024</p>
+            <p>As Artificial Intelligence (AI) tools and programs become more sophisticated, teachers are starting 
+                to look at how they can be successfully incorporated into their lesson planning. Meesha 
+                Arora teaches Economics at The British School, New Delhi and has been using AI with her year 12 
+                students for a reflective assignment.</p>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="5" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="5" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-5">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-5">0</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Images Section -->
+    <div id="images-section">
+        <!-- Example 2: Image -->
+        <div class="item" id="image_1">
+            <div class="image-content">
+                <img src="./images/post1.jpeg" alt="Neymar Jr" style="border-radius: 5px;">
+            </div>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="6" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="6" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-6">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-6">0</span></div>
+            </div>
+        </div>
+
+        <div class="item" id="image_2">
+            <div class="image-content">
+                <img src="./images/post2.jpg" alt="Neymar Jr" style="border-radius: 5px;">
+            </div>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="7" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="7" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-7">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-7">0</span></div>
+            </div>
+        </div>
+
+        <div class="item" id="image_3">
+            <div class="image-content">
+                <img src="./images/post3.webp" alt="Messi" style="border-radius: 5px;">
+            </div>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="8" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="8" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-8">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-8">0</span></div>
+            </div>
+        </div>
+
+        <div class="item" id="image_4">
+            <div class="image-content">
+                <img src="./images/post4.webp" alt="Ronaldo" style="border-radius: 5px;">
+            </div>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="9" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="9" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-9">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-9">0</span></div>
+            </div>
+        </div>
+
+        <div class="item" id="image_5">
+            <div class="image-content">
+                <img src="./images/post5.webp" alt="Beckham" style="border-radius: 5px;">
+            </div>
+
+            <!-- Voting buttons -->
+            <div class="vote-buttons">
+                <button class="vote-btn" data-id="10" data-type="up"><i class="fas fa-thumbs-up"></i></button>
+                <button class="vote-btn" data-id="10" data-type="down"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+
+            <!-- Vote count below buttons using Flexbox -->
+            <div class="vote-count">
+                <div class="upvotes"><span class="upvote-count" id="upvote-count-10">0</span></div>
+                <div class="downvotes"><span class="downvote-count" id="downvote-count-10">0</span></div>
+            </div>
+        </div>
+           <!-- Add more images as needed... -->
+    </div>
+
+</div>
+
+<footer>
+    <p class="footer">&copy; 2024,All Rights Reserved.</p>
+</footer>
+<script>
+    $(document).ready(function() {
+        // Initially show the articles section and hide images
+        $('#articles-section').show();
+
+        // Show Articles Section when clicking "Articles" in navbar
+        $('#show-articles').click(function(event) {
+            event.preventDefault();
+            $('#articles-section').show();
+            $('#images-section').hide();
+        });
+
+        // Show Images Section when clicking "Images" in navbar
+        $('#show-images').click(function(event) {
+            event.preventDefault();
+            $('#images-section').show();
+            $('#articles-section').hide();
+        });
+
+        // Handle the click event on the vote buttons
+        $('.vote-btn').click(function() {
+            var id = $(this).data('id');  // Get the ID of the article/image
+            var type = $(this).data('type');  // Get the type of vote (up or down)
+
+            // Send the vote to the server using AJAX
+            $.ajax({
+                url: 'vote.php',
+                type: 'POST',
+                data: {
+                    item_id: id,
+                    vote_type: type
+                },
+                success: function(response) {
+                    // Debugging to check if the response is received properly
+                    console.log('Response:', response);
+
+                    // Update the upvote and downvote counts on the page
+                    $('#upvote-count-' + id).text(response.upvotes);
+                    $('#downvote-count-' + id).text(response.downvotes);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error: ' + error);  // Log error if something goes wrong
+                }
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>
